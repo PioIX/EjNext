@@ -2,8 +2,10 @@
 import ButtonClass from "@/components/class";
 
 export default function Home() {
-  function funcionA(){
-    console.log("hola mundo")
+  let [contador, setCuenta] = useState=
+  function funcionSumar(){
+    setCuenta(contador++)
+
   }
   function funcionB(){
     console.log("hola chungo")
@@ -20,11 +22,11 @@ export default function Home() {
 };*/
   return (
     <main>
-      <ButtonClass textTitle={"FaconApps"} textSubtitle={"Marchesi es el unico que trabaja"} nameTeacher={"Nicola Facón"} expireDate={"2/10"} taskName={"Tp final"} onClick={funcionA}></ButtonClass>
+      <ButtonClass textTitle={"FaconApps"} textSubtitle={"Marchesi es el unico que trabaja"} nameTeacher={"Nicola Facón"} expireDate={"2/10"} taskName={"Tp final"} onClick={funcionSumar}></ButtonClass>
       <ButtonClass textTitle={"FaconApps"} textSubtitle={"Marchesi es el unico que trabaja"} nameTeacher={"Nicola Facón"} expireDate={"2/10"} taskName={"Tp final"} onClick={funcionB}></ButtonClass>
-      <ButtonClass textTitle={"FaconApps"} textSubtitle={"Marchesi es el unico que trabaja"} nameTeacher={"Nicola Facón"} expireDate={"2/10"} taskName={"Tp final"} onClick={funcionA}></ButtonClass>
-      <ButtonClass textTitle={"FaconApps"} textSubtitle={"Marchesi es el unico que trabaja"} nameTeacher={"Nicola Facón"} expireDate={"2/10"} taskName={"Tp final"} onClick={funcionA}></ButtonClass>
-      <ButtonClass textTitle={"FaconApps"} textSubtitle={"Marchesi es el unico que trabaja"} nameTeacher={"Nicola Facón"} expireDate={"2/10"} taskName={"Tp final"} onClick={funcionA}></ButtonClass>
+      <ButtonClass textTitle={"FaconApps"} textSubtitle={"Marchesi es el unico que trabaja"} nameTeacher={"Nicola Facón"} expireDate={"2/10"} taskName={"Tp final"} onClick={funcionB}></ButtonClass>
+      <ButtonClass textTitle={"FaconApps"} textSubtitle={"Marchesi es el unico que trabaja"} nameTeacher={"Nicola Facón"} expireDate={"2/10"} taskName={"Tp final"} onClick={funcionB}></ButtonClass>
+      <ButtonClass textTitle={"FaconApps"} textSubtitle={"Marchesi es el unico que trabaja"} nameTeacher={"Nicola Facón"} expireDate={"2/10"} taskName={"Tp final"} onClick={funcionB}></ButtonClass>
     </main>
 
 
