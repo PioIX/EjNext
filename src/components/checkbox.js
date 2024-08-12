@@ -4,7 +4,7 @@
 export default function Checkbox(props) {
     
     return (
-        <input type="checkbox" {props.value}></input>
+        <input type="checkbox" defaultChecked={false} onClick={props.function}></input>
 
     );
   };

@@ -24,7 +24,9 @@ export default function Home() {
   function funcionB(){
     console.log("hola chungo")
   }
-
+  function alternarBoton(){
+    
+  }
   useEffect(()=>{
     setCuenta(10)
   }, []
@@ -52,7 +54,7 @@ useEffect(()=>{
       <ButtonClass textTitle={"FaconApps"} textSubtitle={"Marchesi es el unico que trabaja"} nameTeacher={"Nicola Facón"} expireDate={"2/10"} taskName={"Tp final"} onClick={funcionB}></ButtonClass>
       <ButtonClass textTitle={"FaconApps"} textSubtitle={"Marchesi es el unico que trabaja"} nameTeacher={"Nicola Facón"} expireDate={"2/10"} taskName={"Tp final"} onClick={funcionB}></ButtonClass>
       <ButtonClass textTitle={"FaconApps"} textSubtitle={"Marchesi es el unico que trabaja"} nameTeacher={"Nicola Facón"} expireDate={"2/10"} taskName={"Tp final"} onClick={funcionB}></ButtonClass>
-      <Checkbox value={"checked"}></Checkbox>
+      <Checkbox function={alternarBoton}></Checkbox>
       <h2> contador: { contador }</h2>
       <h2> nombre: { nombre }</h2>
       <input type="text" id="ingresoNombre" placeholder="pepeado"></input>
