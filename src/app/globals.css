@@ -85,6 +85,10 @@ body {
   overflow-x: hidden;
 }
 
+h1{
+  color: white;
+  background-color:  #25D366;
+}
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -104,12 +108,4 @@ a {
   html {
     color-scheme: dark;
   }
-}
-
-
-.profilePic {
-  border-radius: '50%';
-  width: '100px'; 
-  height: '100px'; 
-  object-fit: 'cover';
 }

@@ -1,7 +1,6 @@
 "use client"
 
 import clsx from "clsx"
-import styles from "@/components/profilePic.module.css"
 import React from 'react';
 
 export default function ProfilePic({ imageUrl }) {
