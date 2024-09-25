@@ -1,0 +1,8 @@
+/* navChats.module.css */
+.navChatsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;  /* Espacio entre los chats */
+  padding: 10px;
+  background-color: #f4f4f4;
+}
