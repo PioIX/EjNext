@@ -5,7 +5,7 @@ import ProfilePic from "@/components/profilePic.js";  // Importamos la foto de p
 import LastMessage from "@/components/lastMessage.js";  // Último mensaje
 import NameChat from "@/components/nameChat.js";  // Nombre del chat
 import Notification from "@/components/notification.js"; // Notificación
-import styles from "@/components/chat.module.css"; // Estilos CSS
+import styles from "@/components/chatBar.module.css"; // Estilos CSS
 
 export default function ChatBar({ user, message, imageUrl, chatName, notificationCount, group}) {
   return (

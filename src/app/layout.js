@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,7 +14,9 @@ export default function HomeLayout({ children }) {
     <html lang="es">
       <body className={inter.className}>
         <header>
+          <Link href="/chats">
           <h1>Whatsapp</h1>
+          </Link>
         </header>
         {children}
         <footer> sos un cabeza</footer>

@@ -1,33 +1,20 @@
 "use client"
 import Button from "@/components/button";
-import ChatBar from "@/components/chatBar";
 import { useState } from "react";
 import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import NavChats from "@/components/navChats";
-import MessageContent from "@/components/messageContent";  // Importamos el componente
+import Chat from "@/components/chat";
 
-const content = "2023-09-25T14:48:00.000Z";
 export default function Home() {
   let [contador, setCuenta] = useState(0)
-  let [nombre, setNombre] = useState("Anon")
-
-  function funcionSumar(){
-    setCuenta(contador++)
-  }
-
-  function funcionRestar(){
-    setCuenta(contador--)
-  }
-
+  
   function funcionNombre(){
     let nNombre=document.getElementById("ingresoNombre").value
     setNombre(nNombre)
   }
-  function funcionB(){
-    console.log("hola chungo")
-  }
+  
   const chat = [
   {
     user: "Juan",
@@ -94,13 +81,72 @@ export default function Home() {
     group: true
   },
 ];
+  const messages = [
+  {
+    timestamp: "2023-09-25T14:48:00.000Z",
+    content: "peronista cabezon te voy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabjvoy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabj voy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabj voy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabj",
+    group: true,
+    userName: "Juan",
+    own: false, // Mensaje de otro usuario
+  },
+  {
+    timestamp: "2023-09-25T14:50:00.000Z",
+    content: "Eso suena fuerte 😅 peronista cabezon te voy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabjvoy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabj voy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabj voy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabj",
+    group: true,
+    userName: "Yo",
+    own: true, // Mensaje propio
+  },
+  {
+    timestamp: "2023-09-25T14:55:00.000Z",
+    content: "Relajate, es un chiste",
+    group: false,
+    userName: "Juan",
+    own: false, // Mensaje de otro usuario
+  },
+  {
+    timestamp: "2023-09-25T14:50:00.000Z",
+    content: "Eso suena fuerte 😅 peronista cabezon te voy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabjvoy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabj voy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabj voy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabj",
+    group: true,
+    userName: "Yo",
+    own: true, // Mensaje propio
+  },
+  {
+    timestamp: "2023-09-25T14:50:00.000Z",
+    content: "Eso suena fuerte 😅 peronista cabezon te voy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabjvoy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabj voy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabj voy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabj",
+    group: true,
+    userName: "Yo",
+    own: true, // Mensaje propio
+  },
+  {
+    timestamp: "2023-09-25T14:55:00.000Z",
+    content: "Relajate, es un chiste",
+    group: false,
+    userName: "Juan",
+    own: false, // Mensaje de otro usuario
+  },
+  {
+    timestamp: "2023-09-25T14:50:00.000Z",
+    content: "Eso suena fuerte 😅 peronista cabezon te voy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabjvoy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabj voy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabj voy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabj",
+    group: true,
+    userName: "Yo",
+    own: true, // Mensaje propio
+  },
+  {
+    timestamp: "2023-09-25T14:50:00.000Z",
+    content: "Eso suena fuerte 😅 peronista cabezon te voy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabjvoy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabj voy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabj voy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabj",
+    group: true,
+    userName: "Yo",
+    own: true, // Mensaje propio
+  }
+];
 
   return (
     <main>
       <Link href="/">
       <NavChats chat={chat} ></NavChats>
       </Link>
-      <MessageContent content={content} />
+      <Chat messages={messages}/>  
+
     </main>
   );
 }

@@ -1,28 +1,17 @@
+/* chat.module.css */
 .chatContainer {
   display: flex;
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #e0e0e0;
-  background-color: #fff;
-  cursor: pointer;
+  flex-direction: column;  /* Alinea los mensajes en columna */
+  max-width: 75%;        /* Ancho máximo del contenedor del chat */
+  margin: 0 auto;          /* Centrar el contenedor */
 }
 
-.chatContent {
-  flex-grow: 1;
-  margin-left: 10px;
+.ownMessageContainer {
   display: flex;
-  flex-direction: column;
+  justify-content: flex-end;  /* Alinear los mensajes propios a la derecha */
 }
 
-/* Agregamos clases específicas para los títulos y mensajes */
-.chatName {
-  margin: 0;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.lastMessage {
-  margin: 0;
-  font-size: 14px;
-  color: #888;
+.otherMessageContainer {
+  display: flex;
+  justify-content: flex-start;  /* Alinear los mensajes de otros a la izquierda */
 }
