@@ -7,4 +7,3 @@ export default function Button(props) {
       <button onClick={props.onClick}> {props.children} </button>
     );
   };
-  

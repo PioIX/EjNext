@@ -15,6 +15,7 @@ export default function NavChats({ chat }) {
           imageUrl={chat.imageUrl}
           chatName={chat.chatName}
           notificationCount={chat.notificationCount}
+          group={chat.group}
         />
       ))}
     </div>

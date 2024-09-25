@@ -7,13 +7,13 @@ import NameChat from "@/components/nameChat.js";  // Nombre del chat
 import Notification from "@/components/notification.js"; // Notificación
 import styles from "@/components/chat.module.css"; // Estilos CSS
 
-export default function ChatBar({ user, message, imageUrl, chatName, notificationCount }) {
+export default function ChatBar({ user, message, imageUrl, chatName, notificationCount, group}) {
   return (
     <div className={styles.chatContainer}>
       <ProfilePic imageUrl={imageUrl} /> {/* Foto de perfil */}
       <div className={styles.chatContent}>
         <NameChat chat={chatName} /> {/* Nombre del chat */}
-        <LastMessage user={user} content={message} /> {/* Último mensaje */}
+        <LastMessage user={user} content={message} group={group} /> {/* Último mensaje */}
       </div>
       <Notification count={notificationCount} /> {/* Notificaciones */}
     </div>
