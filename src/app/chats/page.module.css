@@ -1,10 +1,16 @@
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
   padding: 6rem;
   min-height: 100vh;
+}
+
+.division{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .description {
@@ -229,6 +235,7 @@
   }
 }
 
+/* form.module.css */
 .container {
   max-width: 500px;
   margin: 10px auto;
@@ -236,4 +243,14 @@
   border: 1px solid #ccc;
   border-radius: 10px;
   background-color: #f9f9f9;
+}
+
+.lateral {
+  padding: 20px;
+}
+
+
+.form {
+  display: flex;
+  flex-direction: column;
 }

@@ -3,6 +3,7 @@ import Button from "@/components/button";
 import { useState } from "react";
 import { useEffect } from "react";
 import Link from "next/link";
+import styles from "@/app/chats/page.module.css"
 import { useRouter } from "next/router";
 import NavChats from "@/components/navChats";
 import Chat from "@/components/chat";
