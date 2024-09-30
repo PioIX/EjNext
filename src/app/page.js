@@ -69,6 +69,7 @@ export default function Home() {
           Registrarse
         </Button>
       </div>
+      <script src="./js/fetchAPI.js"></script>
     </main>
   );
 }
