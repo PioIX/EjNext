@@ -6,9 +6,8 @@ const MySQL = require("./modulos/mysql.js");//Declaro SQL
 var app = express(); //Inicializo express
 var port = process.env.PORT || 3001; //Ejecuto el servidor en el puerto 3000
 app.use(cors({
-    origin: 'http://127.0.0.1:5500' // Ponerle tu direccion y host,aparece en el buscador
-  }));
-
+    origin: ['http://127.0.0.1:5500', 'http://localhost:3000', 'http://localhost:3001']
+}));
 // Convierte una petición recibida (POST-GET...) a objeto JSON
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

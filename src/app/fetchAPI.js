@@ -2,11 +2,10 @@
 const baseURL = 'http://localhost:3001';
 
 // Función para obtener los usuarios
-async function getUsers() {
+export async function getUsers() {
     try {
         const response = await fetch(`${baseURL}/getUsers`);
         const data = await response.json();
-        console.log("Usuarios:", data);
         return data;
     } catch (error) {
         console.error("Error al obtener los usuarios:", error);
@@ -14,7 +13,7 @@ async function getUsers() {
 }
 
 // Función para obtener los chats
-async function getChats() {
+export async function getChats() {
     try {
         const response = await fetch(`${baseURL}/getChats`);
         const data = await response.json();
@@ -26,7 +25,7 @@ async function getChats() {
 }
 
 // Función para obtener las relaciones entre usuarios y chatsv
-async function getChatXUser() {
+export async function getChatXUser() {
     try {
         const response = await fetch(`${baseURL}/getChatXuser`);
         const data = await response.json();
@@ -38,7 +37,7 @@ async function getChatXUser() {
 }
 
 // Función para obtener los mensajes
-async function getMensajes() {
+export async function getMensajes() {
     try {
         const response = await fetch(`${baseURL}/getMensajes`);
         const data = await response.json();
@@ -49,8 +48,38 @@ async function getMensajes() {
     }
 }
 
-// Ejemplos de uso (puedes llamarlas desde tu aplicación)
-getUsers();
-getChats();
-getChatXUser();
-getMensajes();
+export function FindUserByID(id) {
+    for (let i = 0; i < Users.length; i++) {
+        if (Users[i].id === id) {
+            return i; // Devuelve la posición del cliente en el vector
+        }
+    }
+    return -1; // Si no se encuentra el cliente, devuelve -1
+}
+
+export function FindMensajeByID(id) {
+    for (let i = 0; i < Mensajes.length; i++) {
+        if (Mensajes[i].id === id) {
+            return i; // Devuelve la posición del cliente en el vector
+        }
+    }
+    return -1; // Si no se encuentra el cliente, devuelve -1
+}
+  
+export function FindChatByID(id) {
+    for (let i = 0; i < Chats.length; i++) {
+        if (Chats[i].id === id) {
+            return i; // Devuelve la posición del cliente en el vector
+        }
+    }
+    return -1; // Si no se encuentra el cliente, devuelve -1
+}
+
+export function FindChatXUserByID(id) {
+    for (let i = 0; i < ChatXUser.length; i++) {
+        if (ChatXUser[i].id === id) {
+            return i; // Devuelve la posición del cliente en el vector
+        }
+    }
+    return -1; // Si no se encuentra el cliente, devuelve -1
+}
