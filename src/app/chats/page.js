@@ -16,6 +16,8 @@ export default function Home() {
     setNombre(nNombre)
   }
   
+  const { idUser } = router.query;
+
   const chat = [
   {
     user: "Juan",
@@ -82,6 +84,7 @@ export default function Home() {
     group: true
   },
 ];
+
   const messages = [
   {
     timestamp: "2023-09-25T14:48:00.000Z",

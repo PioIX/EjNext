@@ -1,13 +1,14 @@
 "use client"
 import Button from "@/components/button";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/compat/router";
 import React, { useState, useEffect } from "react";
 import { getUsers } from "@/app/fetchAPI.js";
 import Input from "@/components/input"; // Importamos el componente Input
 import styles from "@/app/page.module.css"; // Estilos para el formulario
 
 export default function Home() {
+  const router = useRouter();
   let [firstName, setFirstName] = useState("");
   let [lastName, setLastName] = useState("");
   let [username, setUsername] = useState("");
@@ -23,7 +24,9 @@ export default function Home() {
         // Si el usuario existe, verificar la contraseña
         if (user.password === password) {
           window.alert("Login exitoso");
-          router.push('/chats'); // Redirigir al chat
+          console.log(user.id)
+          router.push(`/chats`); // Redirigir al chat
+          return
         } else {
           window.alert("Contraseña incorrecta");
         }
@@ -35,7 +38,6 @@ export default function Home() {
       window.alert("Error al iniciar sesión");
     }
   }
-
   // Función para registrar una nueva cuenta
   async function linkRegister() {
     try {
