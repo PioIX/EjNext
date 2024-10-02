@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import NavChats from "@/components/navChats";
 import Chat from "@/components/chat";
 import { useSearchParams } from 'next/navigation';
-import { getUsers, getChats, getChatXUser, getMensajes, buscarDatos, prepararChats } from "@/app/fetchAPI.js";
+import { getUsers, getChats, getChatXUser, getMensajes, buscarDatos, userByMensaje, mensajesXChat } from "@/app/fetchAPI.js";
 
 export default function Home() {
   const searchParams = useSearchParams();
@@ -22,7 +22,7 @@ export default function Home() {
     const chats = await getChats()
     const users = await getUsers()
     const chatsUser = await buscarDatos(chatXUser,idUser,'idUser','idChat')
-    const chatsPreparados = await prepararChats(chats, chatsUser)
+    const usuario = await mensajesXChat(mensajes, 1)
     console.log("ids de chats", chatsUser)
   }
   cargarChats()

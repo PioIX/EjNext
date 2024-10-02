@@ -123,20 +123,50 @@ export function buscarDatos(vectorObjetos, datoABuscar, propiedadABuscar, propie
     }
     
     return resultado;
+
 }
 
-export function prepararChats(chats, vectorIds, mensajes, users) {
-    // Vector para almacenar los resultados
-    console.log(chats, vectorIds)
-    let resultado = [];
+export function userByMensaje(mensajes, idChatXUser, chatXUser, users) {
+    for (let mensaje of mensajes) {
+        // Si el mensaje tiene el idChat buscado
+        if (mensaje.idChatXUser == idChatXUser) {
+            const chatUserObj = chatXUser.find(chatUser => chatUser.id == idChatXUser);
 
-   /*  recorra el vector de chats, pasando solo por los ids que coincidan con los del vectorIds
-        que sume el chat selecionado al vector resultado
-        que recorra el vector mensajes y que se fije que coincida el idChat con el del chat recorrido
-            que sume cada uno de los mensajes coincidentes a un vector 
-        que chequee el vector recién hecho, se fije el de ultima timestamp y le sume al chat las propiedades, message y username del mensaje.
-        Que se fije en el id user y use la funcion FindUserByID y con el indice que devuelva, que le sume la propiedad image al objeto del vector de resultado
-    */
+            if (chatUserObj) {
+                // Obtener el idUser del objeto encontrado
+                const idUser = chatUserObj.idUser;
+                // Buscar en el vector de usuarios el usuario con el idUser
+                const user = users.find(user => user.id === idUser);
+                // Si se encuentra el usuario, retornarlo
+                if (user) {
+                    console.log(user)
+                    return user;
+                }
+            }
+        }
+    }
+    return null;
+}
+
+export function mensajesXChat(mensajes, idChat) {
+    let vectorMensajes = mensajes.filter(mensaje => mensaje.idChat == idChat);
+    // Ordenar los mensajes de más nuevo a más antiguo según la propiedad fecha
+    vectorMensajes.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+    // Retornar el vector de mensajes
+    console.log(vectorMensajes)
+    return vectorMensajes;
+}
+
+/*
+export function prepararChats(chats, vectorIds, mensajes, users, chatXuser) {
+    let resultado = [];
+    recorra el vector de chats, pasando solo por los ids que coincidan con los del vectorIds
+        que cree un objeto chat copiando el del vector chats
+        que setee el vector mensajesChat pidiendolo a mensajesXChat(mensajes, idChat)
+        que  le sume al objeto chat las propiedades content y fecha del mensaje con indice [0].
+        que tome el idUser de la funcion userByMensaje()
+        que sume la propiedad image y username del objeto users[idUser] al objeto chat
+        que sume el objeto chat al vector resultado
     return resultado;
 }
 
