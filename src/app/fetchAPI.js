@@ -124,3 +124,28 @@ export function buscarDatos(vectorObjetos, datoABuscar, propiedadABuscar, propie
     
     return resultado;
 }
+
+export function prepararChats(chats, vectorIds, mensajes, users) {
+    // Vector para almacenar los resultados
+    console.log(chats, vectorIds)
+    let resultado = [];
+
+   /*  recorra el vector de chats, pasando solo por los ids que coincidan con los del vectorIds
+        que sume el chat selecionado al vector resultado
+        que recorra el vector mensajes y que se fije que coincida el idChat con el del chat recorrido
+            que sume cada uno de los mensajes coincidentes a un vector 
+        que chequee el vector recién hecho, se fije el de ultima timestamp y le sume al chat las propiedades, message y username del mensaje.
+        Que se fije en el id user y use la funcion FindUserByID y con el indice que devuelva, que le sume la propiedad image al objeto del vector de resultado
+    */
+    return resultado;
+}
+
+/* user: "Juan",
+    message: "¿Cómo estás?",
+    imageUrl: "https://images.contentstack.io/v3/assets/blt3db103350eb1264b/bltcdde08c9378053ea/61f8a1b7dc6df77ee044f583/ztUXqRTw.jpeg",
+    chatName: "Juan",
+    notificationCount: 3,
+    group: false
+
+    0: {id: 1, isGroup: 1, nombre: 'Grupo de trabajo'}
+    */
