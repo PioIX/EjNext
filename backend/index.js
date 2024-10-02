@@ -41,7 +41,15 @@ app.get("/getMensajes", async function (req, res) {
     const respuesta = await MySQL.realizarQuery(`SELECT * FROM mensajesG`);
     res.send(respuesta);
 });
-
+            
+app.post("/postUser", async function (req, res) {  
+    await MySQL.realizarQuery(
+      `INSERT INTO usersG (nombre, apellido, username, password, mail, image) VALUES
+       ('${req.body.firstName}','${req.body.lastName}','${req.body.username}','${req.body.password}','${req.body.email}','${req.body.image}')`
+    );
+  
+    res.send(true);
+});
 // Iniciar el servidor
 app.listen(port, () => {
     console.log(`Servidor corriendo en el puerto ${port}`);
@@ -51,4 +59,5 @@ app.listen(port, () => {
     console.log('   [GET] http://localhost:3001/getChats');
     console.log('   [GET] http://localhost:3001/getChatXUser');
     console.log('   [GET] http://localhost:3001/getMensajes');
+    console.log('   [POST] http://localhost:3001/postUser')
 });
