@@ -1,8 +1,9 @@
-/* input.module.css */
 .inputContainer {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Columna para expandirse verticalmente */
+  flex: 1;
   margin-bottom: 15px;
+  overflow: visible; /* El contenedor también permite el crecimiento sin restricciones */
 }
 
 .label {
@@ -17,6 +18,8 @@
   border-radius: 5px;
   width: 100%;
   box-sizing: border-box;
+  overflow: visible; /* Oculta el scroll vertical y crece automáticamente */
+  min-height: 40px; /* Altura mínima */
 }
 
 .input:focus {

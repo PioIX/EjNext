@@ -3,7 +3,7 @@
 import React from "react";
 import Message from "@/components/message"; // Importa el componente que renderiza el mensaje
 import styles from "@/components/chat.module.css"; // Estilos para el componente Chat
-import Input from "./input";
+import DivEnviar from "@/components/divEnviar";
 
 export default function Chat({ messages, setMensaje, mensaje }) {
   return (
@@ -26,7 +26,8 @@ export default function Chat({ messages, setMensaje, mensaje }) {
           />
         </div>
       ))}
-      <Input label={""} type={"text"} name={"mensaje"} value={mensaje} onChange={setMensaje}/>
+
+      <DivEnviar/>
     </div>
   );
 }
