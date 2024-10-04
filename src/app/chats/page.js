@@ -38,6 +38,7 @@ export default function Home() {
       setChatXUser(chatXUser);
       setChats(chats);
       setMensajes(mensajes)
+      console.log(mensajes)
       setProfilePic(users[FindXByID(idUser, users)].image);
     } catch (error) {
       console.error("Error cargando los chats:", error);

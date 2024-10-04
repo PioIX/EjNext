@@ -50,6 +50,16 @@ app.post("/postUser", async function (req, res) {
   
     res.send(true);
 });
+
+app.post("/postMensaje", async function (req, res) {  
+    await MySQL.realizarQuery(
+      `INSERT INTO mensajes (contenido, fecha, idChatXUser) VALUES 
+      ('${req.body.content}','${req.body.fecha}','${req.body.idChatXUser}')`
+    );
+  
+    res.send(true);
+});
+
 // Iniciar el servidor
 app.listen(port, () => {
     console.log(`Servidor corriendo en el puerto ${port}`);
@@ -60,4 +70,5 @@ app.listen(port, () => {
     console.log('   [GET] http://localhost:3001/getChatXUser');
     console.log('   [GET] http://localhost:3001/getMensajes');
     console.log('   [POST] http://localhost:3001/postUser')
+    console.log('   [POST] http://localhost:3001/postMensaje')
 });

@@ -72,6 +72,30 @@ export async function fetchRegister(newUser) {
     }
   }
 
+  export async function fetchPostMensaje(newMensaje) {
+    try {
+      const response = await fetch('http://localhost:3001/postMensaje', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newMensaje),
+      });
+  
+      // Verificamos si la respuesta fue exitosa
+      if (!response.ok) {
+        throw new Error('Error al enviar el mensaje');
+      }
+  
+      // Parseamos la respuesta
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error('Error en fetchPostMensaje:', error);
+      throw error; // Propagamos el error para manejarlo en el componente
+    }
+  }
+  
 export function FindXByID(id, vector) {
     for (let i = 0; i < vector.length; i++) {
         if (vector[i].id == id) {
@@ -223,5 +247,5 @@ export async function prepararMensajes(idUser, idChat, chats, users, mensajes, c
         }
     }
     // Retornar el vector con los mensajes preparados
-    return resultado.slice(-5);;
+    return resultado.slice(-8);;
 }
