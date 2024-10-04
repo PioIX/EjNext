@@ -68,6 +68,7 @@ h1{
   color: white;
   position: relative;
   padding-left: 40px;
+  font-size:60px;
 }
 body {
   color: rgb(var(--foreground-rgb));

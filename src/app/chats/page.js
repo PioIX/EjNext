@@ -1,58 +1,110 @@
-"use client"
+"use client";
 import Button from "@/components/button";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import styles from "@/app/chats/page.module.css"
+import styles from "@/app/chats/page.module.css";
+import Header from "@/components/header";
 import { useRouter } from "next/router";
 import NavChats from "@/components/navChats";
 import Chat from "@/components/chat";
+import Loading from "@/components/loading";
 import { useSearchParams } from 'next/navigation';
-import { getUsers, getChats, getChatXUser, getMensajes, buscarDatos, userByMensaje, mensajesXChat } from "@/app/fetchAPI.js";
+import { getUsers, getChats, getChatXUser, getMensajes, FindXByID, prepararChats, prepararMensajes } from "@/app/fetchAPI.js";
 
 export default function Home() {
   const searchParams = useSearchParams();
   const idUser = searchParams.get('idUser');
-  //console.log(idUser)
-  let [select, setSelect] = useState("");  
+  const [select, setSelect] = useState(-1);
+  const [MyChats, setMyChats] = useState([]); 
+  const [Users, setUsers] = useState([]); 
+  const [Mensajes, setMensajes] = useState([]); 
+  const [ChatXUser, setChatXUser] = useState([]); 
+  const [Chats, setChats] = useState([]); 
+  const [isLoading, setIsLoading] = useState(true); 
+  const [profilePic, setProfilePic] = useState(""); 
+  const [myMensajes, setMyMensajes] = useState([]);
+  const [Mensaje, setMensaje] = useState(""); 
 
-  async function cargarChats(){
-    const chatXUser = await getChatXUser()
-    const mensajes = await getMensajes()
-    const chats = await getChats()
-    const users = await getUsers()
-    const chatsUser = await buscarDatos(chatXUser,idUser,'idUser','idChat')
-    const usuario = await mensajesXChat(mensajes, 1)
-    console.log("ids de chats", chatsUser)
+  async function cargarChats() {
+    try {
+      setIsLoading(true);
+      const chatXUser = await getChatXUser();
+      const chats = await getChats();
+      const mensajes = await getMensajes();
+      const users = await getUsers();
+      const chatList = await prepararChats(idUser, chats, mensajes, users, chatXUser);
+      setMyChats(chatList);
+      setUsers(users);
+      setChatXUser(chatXUser);
+      setChats(chats);
+      setMensajes(mensajes)
+      setProfilePic(users[FindXByID(idUser, users)].image);
+    } catch (error) {
+      console.error("Error cargando los chats:", error);
+    } finally {
+      setIsLoading(false);
+    }
   }
-  cargarChats()
-  const chat = [
-  {
-    user: "Juan",
-    message: "¿Cómo estás?",
-    imageUrl: "https://images.contentstack.io/v3/assets/blt3db103350eb1264b/bltcdde08c9378053ea/61f8a1b7dc6df77ee044f583/ztUXqRTw.jpeg",
-    chatName: "Juan",
-    notificationCount: 3,
-    group: false
-  },]
 
-  const messages = [
-  {
-    timestamp: "2023-09-25T14:48:00.000Z",
-    content: "peronista cabezon te voy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabjvoy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabj voy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabj voy a mostrar como se had asdkua shhjds kjdbkbjbsabh ahhhshd hjadhb gajdsd dnas dbsadshdvd  dhsbdhabj",
-    group: true,
-    userName: "Juan",
-    own: false, // Mensaje de otro usuario
-  },
-];
+  
+  async function cargarMensajes() {
+    try {
+      const mensajesList = await prepararMensajes(idUser, select, Chats, Users, Mensajes, ChatXUser);
+      setMyMensajes(mensajesList);
+    } catch (error) {
+      console.error("Error cargando los chats:", error);
+    } 
+  }
 
+  async function recargarChats() {
+    try {
+      const chatXUser = await getChatXUser();
+      const chats = await getChats();
+      const mensajes = await getMensajes();
+      const users = await getUsers();
+      const chatList = await prepararChats(idUser, chats, mensajes, users, chatXUser);
+      setMyChats(chatList);
+      setUsers(users);
+      setChatXUser(chatXUser);
+      setChats(chats);
+    } catch (error) {
+      console.error("Error cargando los chats:", error);
+    }
+  }
+
+  useEffect(() => {
+    cargarChats();
+  }, [idUser]);
+
+  useEffect(() => {
+    cargarMensajes();
+  }, [select]);
+
+  // Usamos useEffect para cargar los chats al montar el componente
+  useEffect(() => {
+    recargarChats();
+
+    // Si deseas que los chats se actualicen automáticamente cada cierto tiempo, puedes añadir un intervalo
+    const intervalId = setInterval(() => {
+      recargarChats();
+    }, 5000); // Actualiza los chats cada 5 segundos (ajusta el tiempo si es necesario)
+
+    return () => clearInterval(intervalId); // Limpia el intervalo cuando el componente se desmonte
+  });
+
+ 
   return (
-    <main>
-      <Link href="/">
-      <NavChats chat={chat} ></NavChats>
-      </Link>
-      <Chat messages={messages}/>  
-
-    </main>
+    <div>
+        <Header userId={idUser} imageUrl={profilePic} />
+      {isLoading ? (
+        <Loading/>
+      ) : (
+        // Usamos un fragmento o un `div` para agrupar múltiples elementos
+        <main>
+          <NavChats chat={MyChats} select={select} setSelect={setSelect} />
+          <Chat messages={myMensajes} setSelect={setSelect} setMensaje={setMensaje}/>
+        </main>
+      )}
+    </div>
   );
 }

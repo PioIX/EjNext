@@ -14,14 +14,6 @@ export default function HomeLayout({ children }) {
   return (
     <html lang="es">
       <body className={inter.className}>
-        <header>
-          <Link href="/">
-            <h1>Whatsapp</h1>
-          </Link>
-          <Link href="/user">
-            <ActualProfilePic imageUrl={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDHOpwOoVQPI3SyaT-YLDvZSn4jd2jcc-4HQ&s"} />
-          </Link>
-        </header>
         {children}
       </body>
     </html>

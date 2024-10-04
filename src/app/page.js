@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import { getUsers, fetchRegister } from "@/app/fetchAPI.js";
 import Input from "@/components/input"; // Importamos el componente Input
 import styles from "@/app/page.module.css"; // Estilos para el formulario
+import Header from "@/components/header";
 
 export default function Home() {
 
@@ -89,6 +90,8 @@ export default function Home() {
     }
   }
   return (
+    <div>
+    <Header/>
     <main>
       <div className={styles.container}>
       <h2>Login / Sign-Up</h2>
@@ -135,5 +138,6 @@ export default function Home() {
         </Button>
       </div>
     </main>
+    </div>
   );
 }

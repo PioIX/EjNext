@@ -3,8 +3,9 @@
 import React from "react";
 import Message from "@/components/message"; // Importa el componente que renderiza el mensaje
 import styles from "@/components/chat.module.css"; // Estilos para el componente Chat
+import Input from "./input";
 
-export default function Chat({ messages }) {
+export default function Chat({ messages, setMensaje, mensaje }) {
   return (
     <div className={styles.chatContainer}>
       {messages.map((message, index) => (
@@ -17,7 +18,7 @@ export default function Chat({ messages }) {
           }
         >
           <Message
-            timestamp={message.timestamp}
+            timestamp={message.fecha}
             content={message.content}
             group={message.group}
             userName={message.userName}
@@ -25,6 +26,7 @@ export default function Chat({ messages }) {
           />
         </div>
       ))}
+      <Input label={""} type={"text"} name={"mensaje"} value={mensaje} onChange={setMensaje}/>
     </div>
   );
 }

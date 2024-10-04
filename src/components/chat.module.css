@@ -1,14 +1,16 @@
 /* chat.module.css */
 .chatContainer {
   display: flex;
+  flex: 2;
   flex-direction: column;  /* Alinea los mensajes en columna */
-  max-width: 75%;        /* Ancho máximo del contenedor del chat */
+  max-width: 100%;        /* Ancho máximo del contenedor del chat */
   margin: 0 auto;          /* Centrar el contenedor */
 }
 
 .ownMessageContainer {
   display: flex;
   justify-content: flex-end;  /* Alinear los mensajes propios a la derecha */
+  text-align: right;
 }
 
 .otherMessageContainer {
