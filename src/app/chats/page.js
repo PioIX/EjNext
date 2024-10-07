@@ -9,21 +9,21 @@ import NavChats from "@/components/navChats";
 import Chat from "@/components/chat";
 import Loading from "@/components/loading";
 import { useSearchParams } from 'next/navigation';
-import { getUsers, getChats, getChatXUser, getMensajes, FindXByID, prepararChats, prepararMensajes } from "@/app/fetchAPI.js";
+import { getUsers, getChats, getChatXUser, getMensajes, FindXByID, prepararChats, prepararMensajes, fetchPostMensaje, prepararPostMensaje } from "@/app/fetchAPI.js";
 
 export default function Home() {
   const searchParams = useSearchParams();
   const idUser = searchParams.get('idUser');
   const [select, setSelect] = useState(-1);
-  const [MyChats, setMyChats] = useState([]); 
-  const [Users, setUsers] = useState([]); 
-  const [Mensajes, setMensajes] = useState([]); 
-  const [ChatXUser, setChatXUser] = useState([]); 
-  const [Chats, setChats] = useState([]); 
-  const [isLoading, setIsLoading] = useState(true); 
-  const [profilePic, setProfilePic] = useState(""); 
+  const [MyChats, setMyChats] = useState([]);
+  const [Users, setUsers] = useState([]);
+  const [Mensajes, setMensajes] = useState([]);
+  const [ChatXUser, setChatXUser] = useState([]);
+  const [Chats, setChats] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [profilePic, setProfilePic] = useState("");
   const [myMensajes, setMyMensajes] = useState([]);
-  const [Mensaje, setMensaje] = useState(""); 
+  const [Mensaje, setMensaje] = useState("");
 
   async function cargarChats() {
     try {
@@ -38,7 +38,6 @@ export default function Home() {
       setChatXUser(chatXUser);
       setChats(chats);
       setMensajes(mensajes)
-      console.log(mensajes)
       setProfilePic(users[FindXByID(idUser, users)].image);
     } catch (error) {
       console.error("Error cargando los chats:", error);
@@ -47,13 +46,23 @@ export default function Home() {
     }
   }
 
-  
+  async function enviarMsg() {
+    try {
+      let newMensaje = prepararPostMensaje(select, idUser, Mensaje, ChatXUser)
+      fetchPostMensaje(newMensaje)
+    } catch (error) {
+      console.error("Error enviando:", error);
+    } finally{
+      recargarChats()
+    }
+  }
+
   async function cargarMensajes() {
     try {
       const mensajesList = await prepararMensajes(idUser, select, Chats, Users, Mensajes, ChatXUser);
       setMyMensajes(mensajesList);
     } catch (error) {
-      console.error("Error cargando los chats:", error);
+      console.error("Error cargando los mensajes:", error);
     } 
   }
 
@@ -69,7 +78,7 @@ export default function Home() {
       setChatXUser(chatXUser);
       setChats(chats);
     } catch (error) {
-      console.error("Error cargando los chats:", error);
+      console.error("Error recargando los chats:", error);
     }
   }
 
@@ -79,7 +88,7 @@ export default function Home() {
 
   useEffect(() => {
     cargarMensajes();
-  }, [select]);
+  }, [select, Chats]);
 
   // Usamos useEffect para cargar los chats al montar el componente
   useEffect(() => {
@@ -103,7 +112,7 @@ export default function Home() {
         // Usamos un fragmento o un `div` para agrupar múltiples elementos
         <main>
           <NavChats chat={MyChats} select={select} setSelect={setSelect} />
-          <Chat messages={myMensajes} setSelect={setSelect} setMensaje={setMensaje}/>
+          <Chat messages={myMensajes} setSelect={setSelect} setMensaje={setMensaje} onClick={enviarMsg}/>
         </main>
       )}
     </div>

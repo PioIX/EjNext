@@ -104,6 +104,17 @@ export function FindXByID(id, vector) {
     }
     return -1; // Si no se encuentra el cliente, devuelve -1
 }
+function buscarIdPorUserYChat(userXChatArray, idUser, idChat) {
+    // Recorremos el array de objetos
+    for (let i = 0; i < userXChatArray.length; i++) {
+      // Verificamos si el idUser y el idChat coinciden
+      if (userXChatArray[i].idUser == idUser && userXChatArray[i].idChat == idChat) {
+        return userXChatArray[i].id; // Devolvemos el id del registro encontrado
+      }
+    }
+    
+    return null; // Si no se encuentra ningún registro, devolvemos null
+  }
 
 //perfecta
 export function buscarDatos(vectorObjetos, datoABuscar, propiedadABuscar, propiedadASumar) {
@@ -248,4 +259,15 @@ export async function prepararMensajes(idUser, idChat, chats, users, mensajes, c
     }
     // Retornar el vector con los mensajes preparados
     return resultado.slice(-8);;
+}
+
+export async function prepararPostMensaje(idChat, idUser, content, userXChat) {
+    let idChatXUser=buscarIdPorUserYChat(userXChat, idUser, idChat) 
+    const newMensaje = {
+        idChatXUser: idChatXUser,            // El id correspondiente de la relación userXChat
+        content: content, // El contenido del mensaje
+        fecha: new Date()          // La fecha actual (puedes usar new Date() para obtener la fecha y hora actual)
+      };
+        
+    return newMensaje
 }

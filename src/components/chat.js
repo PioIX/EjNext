@@ -5,7 +5,7 @@ import Message from "@/components/message"; // Importa el componente que renderi
 import styles from "@/components/chat.module.css"; // Estilos para el componente Chat
 import DivEnviar from "@/components/divEnviar";
 
-export default function Chat({ messages, setMensaje, mensaje }) {
+export default function Chat({ messages, setMensaje, onClick }) {
   return (
     <div className={styles.chatContainer}>
       {messages.map((message, index) => (
@@ -27,7 +27,7 @@ export default function Chat({ messages, setMensaje, mensaje }) {
         </div>
       ))}
 
-      <DivEnviar/>
+      <DivEnviar  setMensaje={setMensaje} onClick={onClick}/>
     </div>
   );
 }

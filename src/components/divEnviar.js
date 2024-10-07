@@ -5,7 +5,7 @@ import styles from "@/components/divEnviar.module.css"; // Estilos para la secci
 import Button from "./button";
 import Input from "./input";
 
-export default function DivEnviar({ setMensaje, mensaje }) {
+export default function DivEnviar({ setMensaje, mensaje, onClick }) {
   const textareaRef = useRef(null);  // Usamos una referencia al textarea
 
   // Función para ajustar la altura del textarea según el contenido
@@ -26,7 +26,7 @@ export default function DivEnviar({ setMensaje, mensaje }) {
         className={styles.inputMensaje} // Aplica estilos específicos al input
         placeholder="Escribe un mensaje..." // Placeholder para una mejor experiencia de usuario
       />
-      <Button onClick={() => setMensaje("")} className={styles.botonEnviar}>
+      <Button onClick={onClick} className={styles.botonEnviar}>
         Enviar
       </Button>
     </div>
