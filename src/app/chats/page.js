@@ -26,7 +26,7 @@ export default function Home() {
   const [myMensajes, setMyMensajes] = useState([]);
   const [Mensaje, setMensaje] = useState("Hola");
   const {socket,isConnected} = useSocket();
-
+  
   async function cargarChats() {
     try {
       setIsLoading(true);
@@ -84,15 +84,35 @@ export default function Home() {
       recargarChats()
     }
   }
+  async function connectChat() {
+    try {
+      console.log("Uniéndose a la sala:", `sala${select}`);
+      if (!socket || !isConnected || select === -1) return;
+      socket.emit('joinRoom', { user: idUser, room: `sala${select}` });
+
+    // Limpiar evento al desmontar
+      return () => {
+        socket.emit('leaveRoom', `sala${select}`);
+    };
+    } catch (error) {
+      console.error("Error enviando:", error);
+    } 
+  }
+
+  useEffect(() => {
+    if(!socket) return;
+    connectChat()
+  }, [select]);
 
   useEffect(()=>{
     if(!socket) return;
 
     socket.on('newMessage', data => {
-      var mensajesTemp = Mensajes;
+      console.log(myMensajes)
+      var mensajesTemp = myMensajes;
+      console.log(data.message)
       mensajesTemp.push(data.message);
-      setMensajes(mensajesTemp)
-      console.log("")
+      setMyMensajes(mensajesTemp)
     });
 
   },[socket,isConnected])
@@ -103,14 +123,15 @@ export default function Home() {
 
   useEffect(() => {
     cargarMensajes();
-  }, [select, Chats, Mensajes]);
+  }, [select]);
 
   // Usamos useEffect para cargar los chats al montar el componente
   useEffect(() => {
     // Si deseas que los chats se actualicen automáticamente cada cierto tiempo, puedes añadir un intervalo
     const intervalId = setInterval(() => {
       recargarChats();
-    }, 5000); // Actualiza los chats cada 5 segundos (ajusta el tiempo si es necesario)
+      cargarMensajes();
+    }, 10000); // Actualiza los chats cada 5 segundos (ajusta el tiempo si es necesario)
 
     return () => clearInterval(intervalId); // Limpia el intervalo cuando el componente se desmonte
   });

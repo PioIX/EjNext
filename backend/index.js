@@ -33,19 +33,19 @@ const server = app.listen(LISTEN_PORT, () => {
 	console.log(`Servidor NodeJS corriendo en http://localhost:${LISTEN_PORT}/`);
     console.log(`Servidor corriendo en el puerto ${LISTEN_PORT}`);
     console.log('Defined routes:');
-    console.log('   [GET] http://localhost:3001/');
-    console.log('   [GET] http://localhost:3001/getUsers');
-    console.log('   [GET] http://localhost:3001/getChats');
-    console.log('   [GET] http://localhost:3001/getChatXUser');
-    console.log('   [GET] http://localhost:3001/getMensajes');
-    console.log('   [POST] http://localhost:3001/postUser')
-    console.log('   [POST] http://localhost:3001/postMensaje')
+    console.log('   [GET] http://localhost:4000/');
+    console.log('   [GET] http://localhost:4000/getUsers');
+    console.log('   [GET] http://localhost:4000/getChats');
+    console.log('   [GET] http://localhost:4000/getChatXUser');
+    console.log('   [GET] http://localhost:4000/getMensajes');
+    console.log('   [POST] http://localhost:4000/postUser')
+    console.log('   [POST] http://localhost:4000/postMensaje')
 });;
 
 const io = require('socket.io')(server, {
 	cors: {
 		// IMPORTANTE: REVISAR PUERTO DEL FRONTEND
-		origin: ["http://localhost:3000","http://localhost:3001"],            	// Permitir el origen localhost:3000
+		origin: ["http://localhost:3000","http://localhost:4000"],            	// Permitir el origen localhost:3000
 		methods: ["GET", "POST", "PUT", "DELETE"],  	// Métodos permitidos
 		credentials: true                           	// Habilitar el envío de cookies
 	}
@@ -122,15 +122,18 @@ app.post("/postMensaje", async function (req, res) {
 io.on("connection", (socket) => {
 	const req = socket.request;
 
-	socket.on('joinRoom', data => {
-		console.log("🚀 ~ io.on ~ req.session.room:", req.session.room)
-		if (req.session.room != undefined && req.session.room.length > 0)
-			socket.leave(req.session.room);
-		req.session.room = data.room;
-		socket.join(req.session.room);
-
-		io.to(req.session.room).emit('chat-messages', { user: req.session.user, room: req.session.room });
-	});
+	socket.on('joinRoom', (data) => {
+        console.log("🚀 ~ io.on ~ req.session.room:", req.session.room);
+    
+        if (req.session.room != undefined && req.session.room.length > 0)
+          socket.leave(req.session.room); // Abandona la sala anterior
+    
+        req.session.room = data.room; // Asigna la nueva sala
+        socket.join(req.session.room); // Unirse a la nueva sala
+        console.log("🚀 ~ io.on ~ req.session.room:", req.session.room);
+        // Enviar un mensaje a todos en la sala
+        io.to(req.session.room).emit('chat-messages', { user: req.session.user, room: req.session.room });
+      });
 
 	socket.on('pingAll', data => {
 		console.log("PING ALL: ", data);

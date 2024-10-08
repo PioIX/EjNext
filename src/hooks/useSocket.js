@@ -12,7 +12,7 @@ const useSocket = (options = { withCredentials: true }, serverUrl = "ws://localh
     // Actualizar el estado de la conexión
     socketIo.on('connect', () => {
       setIsConnected(true);
-      console.log('WebSocket connectado.');
+      console.log('WebSocket conectado.');
     });
 
     socketIo.on('disconnect', () => {
