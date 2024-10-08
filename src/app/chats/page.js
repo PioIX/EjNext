@@ -23,7 +23,8 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [profilePic, setProfilePic] = useState("");
   const [myMensajes, setMyMensajes] = useState([]);
-  const [Mensaje, setMensaje] = useState("");
+  const [Mensaje, setMensaje] = useState("Hola");
+
 
   async function cargarChats() {
     try {
@@ -45,18 +46,22 @@ export default function Home() {
       setIsLoading(false);
     }
   }
-
-  async function enviarMsg() {
+  async function recargarChats() {
     try {
-      let newMensaje = prepararPostMensaje(select, idUser, Mensaje, ChatXUser)
-      fetchPostMensaje(newMensaje)
+      const chatXUser = await getChatXUser();
+      const chats = await getChats();
+      const mensajes = await getMensajes();
+      const users = await getUsers();
+      const chatList = await prepararChats(idUser, chats, mensajes, users, chatXUser);
+      setUsers(users);
+      setChatXUser(chatXUser);
+      setChats(chats);
+      setMensajes(mensajes);
+      setMyChats(chatList);
     } catch (error) {
-      console.error("Error enviando:", error);
-    } finally{
-      recargarChats()
+      console.error("Error recargando los chats:", error);
     }
   }
-
   async function cargarMensajes() {
     try {
       const mensajesList = await prepararMensajes(idUser, select, Chats, Users, Mensajes, ChatXUser);
@@ -65,23 +70,19 @@ export default function Home() {
       console.error("Error cargando los mensajes:", error);
     } 
   }
-
-  async function recargarChats() {
+  async function enviarMSG() {
     try {
-      const chatXUser = await getChatXUser();
-      const chats = await getChats();
-      const mensajes = await getMensajes();
-      const users = await getUsers();
-      const chatList = await prepararChats(idUser, chats, mensajes, users, chatXUser);
-      setMyChats(chatList);
-      setUsers(users);
-      setChatXUser(chatXUser);
-      setChats(chats);
+      let newMensaje = await prepararPostMensaje(select, idUser, Mensaje, ChatXUser)
+      console.log(newMensaje)
+      await fetchPostMensaje(newMensaje)
+      setMensaje("")
     } catch (error) {
-      console.error("Error recargando los chats:", error);
+      console.error("Error enviando:", error);
+    } finally{
+      recargarChats()
     }
   }
-
+ 
   useEffect(() => {
     cargarChats();
   }, [idUser]);
@@ -92,8 +93,6 @@ export default function Home() {
 
   // Usamos useEffect para cargar los chats al montar el componente
   useEffect(() => {
-    recargarChats();
-
     // Si deseas que los chats se actualicen automáticamente cada cierto tiempo, puedes añadir un intervalo
     const intervalId = setInterval(() => {
       recargarChats();
@@ -112,7 +111,7 @@ export default function Home() {
         // Usamos un fragmento o un `div` para agrupar múltiples elementos
         <main>
           <NavChats chat={MyChats} select={select} setSelect={setSelect} />
-          <Chat messages={myMensajes} setSelect={setSelect} setMensaje={setMensaje} onClick={enviarMsg}/>
+          <Chat messages={myMensajes} setSelect={setSelect} setMensaje={setMensaje} mensaje={Mensaje} onClick={enviarMSG}/>
         </main>
       )}
     </div>

@@ -53,8 +53,8 @@ app.post("/postUser", async function (req, res) {
 
 app.post("/postMensaje", async function (req, res) {  
     await MySQL.realizarQuery(
-      `INSERT INTO mensajes (contenido, fecha, idChatXUser) VALUES 
-      ('${req.body.content}','${req.body.fecha}','${req.body.idChatXUser}')`
+      `INSERT INTO mensajesG (fecha, content, idChatXUser) VALUES
+      ('${req.body.fecha}', '${req.body.content}', ${req.body.idChatXUser})`
     );
   
     res.send(true);

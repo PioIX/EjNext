@@ -4,6 +4,8 @@ const baseURL = 'http://localhost:3001';
 // Función para obtener los usuarios
 export async function getUsers() {
     try {
+        
+      console.log("user")
         const response = await fetch(`${baseURL}/getUsers`);
         const data = await response.json();
         //console.log(data)
@@ -16,6 +18,7 @@ export async function getUsers() {
 // Función para obtener los chats
 export async function getChats() {
     try {
+        console.log("chat")
         const response = await fetch(`${baseURL}/getChats`);
         const data = await response.json();
         //console.log("Chats:", data);
@@ -28,6 +31,7 @@ export async function getChats() {
 // Función para obtener las relaciones entre usuarios y chatsv
 export async function getChatXUser() {
     try {
+        console.log("chatys")
         const response = await fetch(`${baseURL}/getChatXuser`);
         const data = await response.json();
         //console.log("Relaciones Usuario-Chats:", data);
@@ -40,6 +44,7 @@ export async function getChatXUser() {
 // Función para obtener los mensajes
 export async function getMensajes() {
     try {
+        console.log("msg")
         const response = await fetch(`${baseURL}/getMensajes`);
         const data = await response.json();
         //console.log("Mensajes:", data);
@@ -50,7 +55,7 @@ export async function getMensajes() {
 }
 export async function fetchRegister(newUser) {
     try {
-      const response = await fetch('http://localhost:3001/postUser', {
+      const response = await fetch(`${baseURL}/postUser`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -74,7 +79,7 @@ export async function fetchRegister(newUser) {
 
   export async function fetchPostMensaje(newMensaje) {
     try {
-      const response = await fetch('http://localhost:3001/postMensaje', {
+      const response = await fetch(`${baseURL}/postMensaje`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -231,18 +236,16 @@ export async function prepararChats(idUser, chats, mensajes, users, chatXUser) {
 
 export async function prepararMensajes(idUser, idChat, chats, users, mensajes, chatXUser) {
     let resultado = [];
-    idUser=parseInt(idUser)
-    const vectorIdsCXU = await buscarDatos(chatXUser, idChat, 'idChat', 'idUser');
+    const vectorIdsCXU = await buscarDatos(chatXUser, idChat, 'idChat', 'id');
     for (let mensaje of mensajes) {
-        const vectorIdsCXU = await buscarDatos(chatXUser, idChat, 'idChat', 'idUser');
         // Verificar si el idChatXUser está en el vector de chatXUser
-        for (let i = 0; i < chatXUser.length; i++) {
+        for (let i = 0; i < vectorIdsCXU.length; i++) {
             if(vectorIdsCXU[i]==mensaje.idChatXUser){
                 let nuevoMensaje = { ...mensaje };
-                let cxu = vectorIdsCXU[i]
-
+                let idCXU = vectorIdsCXU[i]
+                let CXU = chatXUser[FindXByID(idCXU, chatXUser)]
             // 4. Verificar si el mensaje pertenece al usuario actual (idUser)
-                if(idUser==cxu){
+                if(idUser==CXU.idUser){
                     nuevoMensaje.own = true
                 } else{
                     nuevoMensaje.own = false
@@ -250,7 +253,7 @@ export async function prepararMensajes(idUser, idChat, chats, users, mensajes, c
 
             // 6. Añadir propiedad isGroup (true si es un grupo, false si es un chat individual)
                 nuevoMensaje.group = Boolean(chats[FindXByID(idChat, chats)].isGroup) 
-                nuevoMensaje.userName = users[FindXByID(cxu, users)].username 
+                nuevoMensaje.userName = users[FindXByID(CXU.idUser, users)].username 
 
             // 7. Agregar el mensaje procesado al resultado
                 resultado.push(nuevoMensaje);
@@ -266,7 +269,7 @@ export async function prepararPostMensaje(idChat, idUser, content, userXChat) {
     const newMensaje = {
         idChatXUser: idChatXUser,            // El id correspondiente de la relación userXChat
         content: content, // El contenido del mensaje
-        fecha: new Date()          // La fecha actual (puedes usar new Date() para obtener la fecha y hora actual)
+        fecha: new Date().toISOString().slice(0, 19).replace('T', ' ')          // La fecha actual (puedes usar new Date() para obtener la fecha y hora actual)
       };
         
     return newMensaje

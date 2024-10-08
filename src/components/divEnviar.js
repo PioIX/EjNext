@@ -6,14 +6,6 @@ import Button from "./button";
 import Input from "./input";
 
 export default function DivEnviar({ setMensaje, mensaje, onClick }) {
-  const textareaRef = useRef(null);  // Usamos una referencia al textarea
-
-  // Función para ajustar la altura del textarea según el contenido
-  const autoResizeTextarea = () => {
-    const textarea = textareaRef.current;
-    textarea.style.height = "auto";  // Resetea la altura para recalcularla
-    textarea.style.height = `${textarea.scrollHeight}px`;  // Ajusta la altura en función del contenido
-  };
 
   return (
     <div className={styles.divEnviar}>
