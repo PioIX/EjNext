@@ -9,6 +9,7 @@ import NavChats from "@/components/navChats";
 import Chat from "@/components/chat";
 import Loading from "@/components/loading";
 import { useSearchParams } from 'next/navigation';
+import { useSocket } from "@/hooks/useSocket";
 import { getUsers, getChats, getChatXUser, getMensajes, FindXByID, prepararChats, prepararMensajes, fetchPostMensaje, prepararPostMensaje } from "@/app/fetchAPI.js";
 
 export default function Home() {
@@ -24,7 +25,7 @@ export default function Home() {
   const [profilePic, setProfilePic] = useState("");
   const [myMensajes, setMyMensajes] = useState([]);
   const [Mensaje, setMensaje] = useState("Hola");
-
+  const {socket,isConnected} = useSocket();
 
   async function cargarChats() {
     try {
@@ -74,6 +75,7 @@ export default function Home() {
     try {
       let newMensaje = await prepararPostMensaje(select, idUser, Mensaje, ChatXUser)
       console.log(newMensaje)
+      socket.emit('sendMessage', newMensaje);
       await fetchPostMensaje(newMensaje)
       setMensaje("")
     } catch (error) {
@@ -82,6 +84,18 @@ export default function Home() {
       recargarChats()
     }
   }
+
+  useEffect(()=>{
+    if(!socket) return;
+
+    socket.on('newMessage', data => {
+      var mensajesTemp = Mensajes;
+      mensajesTemp.push(data.message);
+      setMensajes(mensajesTemp)
+      console.log("")
+    });
+
+  },[socket,isConnected])
  
   useEffect(() => {
     cargarChats();
@@ -89,7 +103,7 @@ export default function Home() {
 
   useEffect(() => {
     cargarMensajes();
-  }, [select, Chats]);
+  }, [select, Chats, Mensajes]);
 
   // Usamos useEffect para cargar los chats al montar el componente
   useEffect(() => {

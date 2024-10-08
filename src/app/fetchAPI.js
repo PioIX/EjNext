@@ -1,5 +1,5 @@
 // URL base para todas las peticiones
-const baseURL = 'http://localhost:3001';
+const baseURL = 'http://localhost:4000';
 
 // Función para obtener los usuarios
 export async function getUsers() {
